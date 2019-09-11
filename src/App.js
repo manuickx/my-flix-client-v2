@@ -7,6 +7,7 @@ import API from "./API";
 import NavBar from "./components/NavBar/NavBar";
 import LandingPage from "./components/LandingPage/LandingPage";
 import MoviesList from "./components/MoviesList/MoviesList";
+import MovieInfo from "./components/MovieInfo/MovieInfo";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -41,6 +42,7 @@ function App() {
               />
             )}
           />
+          <Route path="/movies/:id" component={MovieInfo} />
         </Switch>
       </div>
     </div>
