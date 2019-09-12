@@ -24,9 +24,10 @@ class API {
     }).then(resp => resp.json());
   }
 
-  // GET USER FAVORITES
+  // GET USER FAVOURITES
+
   static getUserMovies(token) {
-    return fetch(this.baseUrl + "/favorites", {
+    return fetch(this.baseUrl + "/user_favourites", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,21 +37,20 @@ class API {
   }
   //
 
-  // ADD FAVORITE
+  // ADD AND REMOVE FAVOURITE MOVIE
+
   static addMovieToCollection = (movie, token) => {
-    return fetch(this.baseUrl + "/favorites", {
+    return fetch(this.baseUrl + "/user_favourites", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({
-        movie_ref_id: movie.id,
-        movie_poster_path: movie.poster_path,
-        movie_title: movie.title
+        movie_ref_id: movie.id
       })
-    });
+    }).then(resp => resp.json());
   };
 
   static removeMovieFromCollection = (movie, token) => {
-    return fetch(this.baseUrl + "/favorites", {
+    return fetch(this.baseUrl + "/user_favourites", {
       method: "DELETE",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({ movie_id: movie.id })
@@ -148,6 +148,18 @@ class API {
       body: JSON.stringify({ show_id: showId })
     }).then(resp => resp.json());
   };
+
+  static getShowTrailers = showId => {
+    return fetch(this.baseUrl + "/show_trailers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ show_id: showId })
+    })
+      .then(resp => resp.json())
+      .then(json => json.results);
+  };
+
+  // GET ACTOR INFO FROM API
 
   static getActorDetails = actorId => {
     return fetch(this.baseUrl + "/actors/1", {

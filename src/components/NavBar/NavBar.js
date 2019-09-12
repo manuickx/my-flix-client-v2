@@ -8,7 +8,7 @@ import FormControl from "react-bootstrap/FormControl";
 
 import "./NavBar.sass";
 
-function NavBar(props) {
+function NavBar({ user, handleLogout }) {
   return (
     <div className="navbar">
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
@@ -20,7 +20,7 @@ function NavBar(props) {
           <Nav className="mr-auto">
             <Nav.Link href="/movies">MOVIES</Nav.Link>
             <Nav.Link href="/shows">TV SHOWS</Nav.Link>
-            <Nav.Link href="/collection">COLLECTION</Nav.Link>
+            {user ? <Nav.Link href="/collection">COLLECTION</Nav.Link> : null}
             {/* <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -38,8 +38,19 @@ function NavBar(props) {
             <Button variant="outline-light">Search</Button>
           </Form>
           <Nav>
-            <Nav.Link href="/login">LOGIN</Nav.Link>
-            <Nav.Link href="/signup">SIGNUP</Nav.Link>
+            {user ? (
+              <>
+                <Nav.Link href="/home" onClick={handleLogout}>
+                  LOGOUT
+                </Nav.Link>
+                <Nav.Link>{user.name.toUpperCase()}</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link href="/login">LOGIN</Nav.Link>
+                <Nav.Link href="/signup">SIGNUP</Nav.Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

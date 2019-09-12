@@ -10,6 +10,12 @@ import InfoCast from "./components/InfoCast";
 
 function MovieInfo(props) {
   const { id } = props.match.params;
+  const token = localStorage.getItem("token");
+  const [inCollection, setInCollection] = useState(
+    props.userMovies.find(movie => movie.movie_ref_id.toString() === id)
+      ? true
+      : false
+  );
 
   const [movieData, setMovieData] = useState({
     movie: null,
@@ -17,6 +23,14 @@ function MovieInfo(props) {
     trailer: null,
     recommended: null
   });
+
+  const addMovieToCollection = () => {
+    API.addMovieToCollection(movie, token).then(setInCollection(true));
+  };
+
+  const removeMovieFromCollection = () => {
+    API.removeMovieFromCollection(movie, token).then(setInCollection(false));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +51,6 @@ function MovieInfo(props) {
     cast === null ||
     trailer === null ||
     recommended === null
-    //   this.state.userMovies === null
   ) {
     return (
       <div className="loader">
@@ -54,21 +67,30 @@ function MovieInfo(props) {
       </div>
     );
   } else {
-    const { original_title, overview } = movie;
+    const { title, overview } = movie;
 
     return (
       <div className="info-details-container">
+        {inCollection ? (
+          <button onClick={removeMovieFromCollection}>NO COLLECTION</button>
+        ) : (
+          <button onClick={addMovieToCollection}>COLLECTION</button>
+        )}
         <InfoTop movie={movie} />
         <div className="info-overview">
           <h2>
-            {original_title} ({movie.release_date.substring(0, 4)})
+            {title} ({movie.release_date.substring(0, 4)})
           </h2>
           <p>{overview}</p>
         </div>
         <h2 className="section-title">TRAILER:</h2>
         <InfoTrailer trailer={trailer} />
-        <h2 className="section-title">RECOMMENDED MOVIES:</h2>
-        <InfoRecommended recommended={recommended} />
+        {recommended.length > 0 ? (
+          <>
+            <h2 className="section-title">RECOMMENDED MOVIES:</h2>
+            <InfoRecommended recommended={recommended} />
+          </>
+        ) : null}
         <h2 className="section-title">CAST:</h2>
         <InfoCast cast={cast} />
       </div>
