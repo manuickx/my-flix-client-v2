@@ -11,29 +11,36 @@ import MovieInfo from "./components/MovieInfo/MovieInfo";
 import ShowInfo from "./components/ShowInfo/ShowInfo";
 import UserLoginNew from "./components/UserLoginNew/UserLoginNew";
 import UserSignupNew from "./components/UserSignupNew/UserSignupNew";
+import CollectionList from "./components/CollectionList/CollectionList";
+import ActorInfo from "./components/ActorInfo/ActorInfo";
+import SeasonInfo from "./components/SeasonInfo/SeasonInfo";
 
-function App() {
+function App(props) {
   const token = localStorage.getItem("token");
 
   const [user, setUser] = useState(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(2);
   const [movies, setMovies] = useState([]);
   const [shows, setShows] = useState([]);
   const [userMovies, setUserMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(
-    () =>
-      token ? (getCurrentUser(token), getUserFavourites(token)) : undefined,
-    []
+    () => (token ? (getCurrentUser(token), getUserMovies(token)) : undefined),
+    [token]
   );
-  useEffect(() => getMovies(page), []);
-  useEffect(() => getShows(page), []);
+
+  useEffect(() => {
+    API.getMovies(1).then(movies => setMovies(movies));
+    API.getShows(1).then(shows => setShows(shows));
+  }, []);
 
   const getCurrentUser = token => {
     API.getCurrentUser(token).then(user => setUser(user));
   };
 
-  const getUserFavourites = token => {
+  const getUserMovies = token => {
     API.getUserMovies(token).then(userMovies => setUserMovies(userMovies));
   };
 
@@ -62,9 +69,25 @@ function App() {
     getShows(page);
   };
 
+  const handleSearch = event => {
+    event.preventDefault();
+    API.searchMovie(searchTerm).then(movies => setSearchResults(movies));
+    props.history.push({
+      pathname: "/search",
+      search: `?name=${searchTerm}`
+    });
+  };
+
   return (
     <div className="App">
-      <NavBar user={user} handleLogout={handleLogout} />
+      <NavBar
+        props={props}
+        user={user}
+        handleLogout={handleLogout}
+        setSearchTerm={setSearchTerm}
+        handleSearch={handleSearch}
+        searchTerm={searchTerm}
+      />
       <div className="show-container">
         <Switch>
           <Route path="/home" exact component={LandingPage} />
@@ -91,10 +114,18 @@ function App() {
             )}
           />
           <Route
-            path="/movies/:id"
-            render={props => <MovieInfo {...props} userMovies={userMovies} />}
+            path="/collection"
+            exact
+            render={props => <CollectionList {...props} movies={userMovies} />}
+          />
+          <Route path="/movies/:id" component={MovieInfo} />
+          <Route
+            path="/search"
+            exact
+            render={props => <MoviesList {...props} movies={searchResults} />}
           />
           <Route path="/shows/:id" exact component={ShowInfo} />
+          <Route path="/shows/:id/season/:id" exact component={SeasonInfo} />
           <Route
             exact
             path="/login"
@@ -109,6 +140,7 @@ function App() {
               <UserSignupNew {...props} getCurrentUser={getCurrentUser} />
             )}
           />
+          <Route path="/actors/:id" component={ActorInfo} />
         </Switch>
       </div>
     </div>

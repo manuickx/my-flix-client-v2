@@ -44,7 +44,11 @@ class API {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({
-        movie_ref_id: movie.id
+        movie_ref_id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+        overview: movie.overview,
+        vote_average: movie.vote_average
       })
     }).then(resp => resp.json());
   };
@@ -157,6 +161,16 @@ class API {
     })
       .then(resp => resp.json())
       .then(json => json.results);
+  };
+
+  static getShowSeason = (showId, season) => {
+    return fetch(this.baseUrl + "/show_season", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ show_id: showId, season: season })
+    })
+      .then(resp => resp.json())
+      .then(json => json.result);
   };
 
   // GET ACTOR INFO FROM API
