@@ -33,7 +33,7 @@ function MoviesList({ type, location }) {
       <InfiniteScroll
         dataLength={items.length}
         next={getMoreItems}
-        hasMore={location.pathname.includes("search") ? false : true}
+        hasMore={location.pathname.includes("search")}
         loader={<Loader list={true} />}
       >
         <div className="movies-list">
