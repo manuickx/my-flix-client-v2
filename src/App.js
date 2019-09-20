@@ -80,7 +80,7 @@ function App(props) {
       />
       <div className="show-container">
         <Switch>
-          <Route path="/" exact component={LandingPage} />
+          <Route path="/home" exact component={LandingPage} />
           <Route
             exact
             path="/login"
