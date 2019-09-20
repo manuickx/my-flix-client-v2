@@ -125,7 +125,7 @@ function App(props) {
               />
             )}
           />
-          <Route path="/movies/:movieId" component={MovieInfo} />
+          <Route path="/movies/:movieId" exact component={MovieInfo} />
           <Route
             path="/search/movies"
             exact
