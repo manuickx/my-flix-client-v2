@@ -87,14 +87,16 @@ function MovieInfo({ match }) {
             token={token}
           />
           <InfoOverview item={item} type={type} />
-          {type === "tv" && (
+          {/* {type === "tv" && (
             <>
               <h2 className="section-title">SEASONS:</h2>
               {seasons.map(season => (
-                <a href={`/shows/${id}/season/${season + 1}`}>{season + 1}</a>
+                <a key={season + 1} href={`/shows/${id}/season/${season + 1}`}>
+                  {season + 1}
+                </a>
               ))}
             </>
-          )}
+          )} */}
           {trailer && (
             <>
               <h2 className="section-title">TRAILER:</h2>
@@ -107,8 +109,8 @@ function MovieInfo({ match }) {
               <InfoRecommended recommended={recommended} type={type} />
             </>
           )} */}
-          <h2 className="section-title">CAST:</h2>
-          <InfoCast cast={cast} />
+          {/* <h2 className="section-title">CAST:</h2>
+          <InfoCast cast={cast} /> */}
         </div>
       )}
     </div>

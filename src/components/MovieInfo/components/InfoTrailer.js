@@ -3,8 +3,8 @@ import YouTube from "react-youtube";
 
 function InfoTrailer({ trailer }) {
   const opts = {
-    height: "150",
-    width: "245",
+    // height: "480",
+    // width: "640",
     playerVars: {
       autoplay: 0
     }

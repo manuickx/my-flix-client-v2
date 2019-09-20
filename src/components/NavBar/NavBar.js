@@ -12,7 +12,7 @@ function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
   return (
     <div className="navbar">
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
-        <Navbar.Brand href="/home">MyFlix</Navbar.Brand>
+        <Navbar.Brand href="/">MyFlix</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -20,7 +20,7 @@ function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
             <Nav.Link href="/shows">TV SHOWS</Nav.Link>
             {user ? <Nav.Link href="/collection">COLLECTION</Nav.Link> : null}
           </Nav>
-          {(props.location.pathname === "/movies" ||
+          {/* {(props.location.pathname === "/movies" ||
             props.location.pathname === "/shows") && (
             <Form inline onSubmit={handleSearch}>
               <FormControl
@@ -35,7 +35,7 @@ function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
                 onChange={e => setSearchTerm(e.target.value)}
               />
             </Form>
-          )}
+          )} */}
           <Nav>
             {user ? (
               <>
