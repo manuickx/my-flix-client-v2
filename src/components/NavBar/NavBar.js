@@ -20,8 +20,8 @@ function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
             <Nav.Link href="/shows">TV SHOWS</Nav.Link>
             {user ? <Nav.Link href="/collection">COLLECTION</Nav.Link> : null}
           </Nav>
-          {/* {(props.location.pathname === "/movies" ||
-            props.location.pathname === "/shows") && (
+          {(props.location.pathname.includes("movies") ||
+            props.location.pathname.includes("shows")) && (
             <Form inline onSubmit={handleSearch}>
               <FormControl
                 type="text"
@@ -35,7 +35,7 @@ function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
                 onChange={e => setSearchTerm(e.target.value)}
               />
             </Form>
-          )} */}
+          )}
           <Nav>
             {user ? (
               <>

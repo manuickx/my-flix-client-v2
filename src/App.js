@@ -11,6 +11,7 @@ import MovieInfo from "./components/MovieInfo/MovieInfo";
 import UserLoginNew from "./components/UserLoginNew/UserLoginNew";
 import UserSignupNew from "./components/UserSignupNew/UserSignupNew";
 import CollectionList from "./components/CollectionList/CollectionList";
+import SearchList from "./components/SearchList/SearchList";
 import ActorInfo from "./components/ActorInfo/ActorInfo";
 import SeasonInfo from "./components/SeasonInfo/SeasonInfo";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
@@ -20,25 +21,8 @@ function App(props) {
 
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
-  let type;
-  switch (props.location.pathname) {
-    case "/movies":
-      type = "movie";
-      break;
-    case "/search/movies":
-      type = "movie";
-      break;
-    case "/shows":
-      type = "tv";
-      break;
-    case "/search/shows":
-      type = "tv";
-      break;
-    default:
-      type = "";
-  }
+  let type = props.location.pathname.includes("movies") ? "movie" : "tv";
 
   useEffect(() => {
     const getUser = async () => {
@@ -51,19 +35,15 @@ function App(props) {
   const handleLogout = () => {
     localStorage.clear("token");
     setUser({ user: null });
-    props.history.push("/home");
+    props.history.push("/");
   };
 
-  const handleSearch = event => {
+  const handleSearch = async event => {
     event.preventDefault();
-    API.searchMovie(searchTerm, type, 1).then(movies =>
-      setSearchResults(movies)
-    );
     props.history.push({
-      pathname:
-        props.location.pathname === "/movies"
-          ? "/search/movies"
-          : "/search/shows",
+      pathname: props.location.pathname.includes("movies")
+        ? "/search/movies"
+        : "/search/shows",
       search: `?name=${searchTerm}`
     });
   };
@@ -94,50 +74,21 @@ function App(props) {
           <Route
             path="/movies"
             exact
-            render={props => (
-              <MoviesList
-                {...props}
-                // items={items}
-                type={type}
-                // getMoreItems={getMoreItems}
-              />
-            )}
+            render={props => <MoviesList {...props} type={type} />}
           />
           <Route
             path="/shows"
             exact
-            render={props => (
-              <MoviesList
-                {...props}
-                // items={items}
-                type={type}
-                // getMoreItems={getMoreItems}
-              />
-            )}
+            render={props => <MoviesList {...props} type={type} />}
           />
           <Route
             path="/collection"
             exact
-            render={props => (
-              <CollectionList
-                {...props}
-                // favs={userFavs}
-              />
-            )}
+            render={props => <CollectionList {...props} />}
           />
           <Route path="/movies/:movieId" exact component={MovieInfo} />
-          <Route
-            path="/search/movies"
-            exact
-            render={props => (
-              <MoviesList {...props} items={searchResults} type={type} />
-            )}
-          />
-          <Route
-            path="/search/shows"
-            exact
-            render={props => <MoviesList {...props} items={searchResults} />}
-          />
+          <Route path="/search/movies" exact component={SearchList} />} />
+          <Route path="/search/shows" exact component={SearchList} />} />
           <Route path="/shows/:showId" exact component={MovieInfo} />
           <Route
             path="/shows/:showId/season/:seasonId"
