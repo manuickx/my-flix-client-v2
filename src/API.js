@@ -1,10 +1,18 @@
 class API {
   static init() {
-    this.portIp = 3000;
-    this.baseUrl = "http://localhost:" + this.portIp;
+    // this.portIp = 3000;
+    // this.baseUrl = "http://localhost:" + this.portIp;
+    this.baseUrl = "https://myflixtwo.herokuapp.com/";
   }
 
-  // LOGIN
+  static createUser = user => {
+    return fetch(this.baseUrl + "/users/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user)
+    }).then(resp => resp.json());
+  };
+
   static login(credentials) {
     return fetch(this.baseUrl + "/auth/create", {
       method: "POST",
@@ -13,7 +21,6 @@ class API {
     }).then(resp => resp.json());
   }
 
-  // LOGIN - GET CURRENT USER
   static getCurrentUser(token) {
     return fetch(this.baseUrl + "/auth/show", {
       method: "GET",
@@ -24,8 +31,6 @@ class API {
     }).then(resp => resp.json());
   }
 
-  // GET USER FAVOURITES
-
   static getUserMovies(token) {
     return fetch(this.baseUrl + "/user_favourites", {
       method: "GET",
@@ -35,9 +40,6 @@ class API {
       }
     }).then(resp => resp.json());
   }
-  //
-
-  // ADD AND REMOVE FAVOURITE MOVIE
 
   static addMovieToCollection = (movie, token) => {
     return fetch(this.baseUrl + "/user_favourites", {
@@ -45,10 +47,11 @@ class API {
       headers: { "Content-Type": "application/json", Authorization: token },
       body: JSON.stringify({
         movie_ref_id: movie.id,
-        title: movie.title,
+        title: movie.title ? movie.title : movie.name,
         poster_path: movie.poster_path,
         overview: movie.overview,
-        vote_average: movie.vote_average
+        vote_average: movie.vote_average,
+        type: movie.title ? "movie" : "tv"
       })
     }).then(resp => resp.json());
   };
@@ -61,103 +64,15 @@ class API {
     }).then(resp => resp.json());
   };
 
-  // CREATE USER
-  static createUser = user => {
-    return fetch(this.baseUrl + "/users/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user)
-    }).then(resp => resp.json());
-  };
-
-  // GET MOVIES AND MOVIE INFO FROM API
-
-  static getMovies(page) {
-    return fetch(this.baseUrl + "/movies", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page })
-    })
-      .then(resp => resp.json())
-      .then(json => json.results);
-  }
-
-  static getOneMovie = movieId => {
-    return fetch(this.baseUrl + "/movies/1", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ movie_id: movieId })
-    }).then(resp => resp.json());
-  };
-
-  static searchMovie = searchTerm => {
-    return fetch(this.baseUrl + "/movies/search", {
+  static searchMovie = (searchTerm, searchType, page) => {
+    return fetch(this.baseUrl + "/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        page: 1,
-        search_term: searchTerm
+        page: page,
+        search_term: searchTerm,
+        search_type: searchType
       })
-    })
-      .then(resp => resp.json())
-      .then(json => json.results);
-  };
-
-  static getMovieCredits = movieId => {
-    return fetch(this.baseUrl + "/credits", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ movie_id: movieId })
-    })
-      .then(resp => resp.json())
-      .then(json => json.cast);
-  };
-
-  static getMovieTrailers = movieId => {
-    return fetch(this.baseUrl + "/trailers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ movie_id: movieId })
-    })
-      .then(resp => resp.json())
-      .then(json => json.results);
-  };
-
-  static getMovieRecommendations = movieId => {
-    return fetch(this.baseUrl + "/recommended", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ movie_id: movieId })
-    })
-      .then(resp => resp.json())
-      .then(json => json.results);
-  };
-
-  // GET SHOWS AND TV SHOW INFO FROM API
-
-  static getShows(page) {
-    return fetch(this.baseUrl + "/shows", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page })
-    })
-      .then(resp => resp.json())
-      .then(json => json.results);
-  }
-
-  static getOneShow = showId => {
-    return fetch(this.baseUrl + "/shows/1", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ show_id: showId })
-    }).then(resp => resp.json());
-  };
-
-  static getShowTrailers = showId => {
-    return fetch(this.baseUrl + "/show_trailers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ show_id: showId })
     })
       .then(resp => resp.json())
       .then(json => json.results);
@@ -168,12 +83,8 @@ class API {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ show_id: showId, season: season })
-    })
-      .then(resp => resp.json())
-      .then(json => json.result);
+    }).then(resp => resp.json());
   };
-
-  // GET ACTOR INFO FROM API
 
   static getActorDetails = actorId => {
     return fetch(this.baseUrl + "/actors/1", {
@@ -189,6 +100,62 @@ class API {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ actor_id: actorId })
     }).then(resp => resp.json());
+  };
+
+  static getActorImages = actorId => {
+    return fetch(this.baseUrl + "/actor_images", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ actor_id: actorId })
+    }).then(resp => resp.json());
+  };
+
+  static getItems(type, page) {
+    return fetch(this.baseUrl + "/items", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: type, page: page })
+    })
+      .then(resp => resp.json())
+      .then(json => json.results);
+  }
+
+  static getOneItem = (type, itemId) => {
+    return fetch(this.baseUrl + "/items/1", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ item_id: itemId, type: type })
+    }).then(resp => resp.json());
+  };
+
+  static getTrailers = (type, itemId) => {
+    return fetch(this.baseUrl + "/trailers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: type, item_id: itemId })
+    })
+      .then(resp => resp.json())
+      .then(json => json.results);
+  };
+
+  static getCredits = (type, itemId) => {
+    return fetch(this.baseUrl + "/credits", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: type, item_id: itemId })
+    })
+      .then(resp => resp.json())
+      .then(json => json.cast);
+  };
+
+  static getRecommendations = (type, itemId) => {
+    return fetch(this.baseUrl + "/recommended", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type: type, item_id: itemId })
+    })
+      .then(resp => resp.json())
+      .then(json => json.results);
   };
 }
 

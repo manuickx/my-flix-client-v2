@@ -10,3 +10,92 @@
         width: 100%
         top: 5%
         opacity: 0.4
+
+    .cross-line
+        content: ""
+        width: 100%
+        height: 16%
+        position: absolute
+        background-color: black
+        top: 40%
+
+    .footer
+        text-align: center
+        width: 100%
+        font-size: 18px
+        font-weight: bold
+        position: absolute
+        bottom: 5px
+        color: grey
+        align-content: center
+
+    .logo-big
+        position: absolute
+        top: 25%
+        left: 50%
+        transform: translateX(-50%)
+        font-size: 200px
+        font-weight: bold
+        color: white
+        text-shadow: 20px 10px black
+        z-index: 2
+
+@media screen and (max-width: 1025px)
+    .image-holder
+        .logo-big
+            font-size: 180px
+
+        .footer
+            font-size: 16px
+
+        .landing-image
+            height: 75%
+
+        .cross-line
+            top: 39%
+            height: 14%
+
+@media screen and (max-width: 961px)
+    .image-holder
+        .logo-big
+            font-size: 160px
+            top: 37%
+
+        .footer
+            font-size: 14px
+
+        .landing-image
+            height: 50%
+
+        .cross-line
+            visibility: hidden
+
+@media screen and (max-width: 768px)
+    .image-holder
+        .logo-big
+            font-size: 140px
+            top: 30%
+
+        .footer
+            font-size: 12px
+
+        .landing-image
+            height: 40%
+
+        .cross-line
+            visibility: hidden
+
+@media screen and (max-width: 415px)
+    .image-holder
+        .logo-big
+            font-size: 90px
+            top: 25%
+
+        .footer
+            font-size: 10px
+
+        .landing-image
+            height: 30%
+
+        .cross-line
+            visibility: hidden

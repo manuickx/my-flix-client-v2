@@ -8,19 +8,11 @@ import FormControl from "react-bootstrap/FormControl";
 
 import "./NavBar.sass";
 
-function NavBar({
-  user,
-  handleLogout,
-  setSearchTerm,
-  searchTerm,
-  handleSearch
-}) {
+function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
   return (
     <div className="navbar">
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
-        <Navbar.Brand href="/home" onClick={() => console.log("click")}>
-          MyFlix
-        </Navbar.Brand>
+        <Navbar.Brand href="/home">MyFlix</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -28,16 +20,22 @@ function NavBar({
             <Nav.Link href="/shows">TV SHOWS</Nav.Link>
             {user ? <Nav.Link href="/collection">COLLECTION</Nav.Link> : null}
           </Nav>
-          <Form inline onSubmit={handleSearch}>
-            <FormControl
-              type="text"
-              placeholder="Search your flick..."
-              className="mr-sm-2"
-              required={true}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-            {/* <Button variant="outline-light">Search</Button> */}
-          </Form>
+          {(props.location.pathname === "/movies" ||
+            props.location.pathname === "/shows") && (
+            <Form inline onSubmit={handleSearch}>
+              <FormControl
+                type="text"
+                placeholder={`${
+                  props.location.pathname.includes("movies")
+                    ? "Search movie..."
+                    : "Search tv show..."
+                }`}
+                className="mr-sm-2"
+                required={true}
+                onChange={e => setSearchTerm(e.target.value)}
+              />
+            </Form>
+          )}
           <Nav>
             {user ? (
               <>

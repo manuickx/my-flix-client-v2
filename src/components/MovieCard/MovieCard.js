@@ -9,7 +9,11 @@ function MovieCard({ movie }) {
     <div className="movie-card">
       <div className="movie-poster">
         <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : "https://d32qys9a6wm9no.cloudfront.net/images/movies/poster/500x735.png"
+          }
           alt=""
         ></img>
       </div>

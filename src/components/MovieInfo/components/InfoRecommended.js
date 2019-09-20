@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function InfoRecommended({ recommended }) {
+function InfoRecommended({ recommended, type }) {
   const [selected, setSelected] = useState(recommended[0]);
 
   const selectMovie = movie => {
@@ -17,7 +17,7 @@ function InfoRecommended({ recommended }) {
             <li key={rec.id}>
               <div className="rec-movie-container">
                 <img
-                  onMouseEnter={() => selectMovie(rec)}
+                  onClick={() => selectMovie(rec)}
                   src={`https://image.tmdb.org/t/p/w500${rec.poster_path}`}
                   alt=""
                 />
@@ -26,15 +26,21 @@ function InfoRecommended({ recommended }) {
           ))}
         </div>
         <div className="selected-rec-movie">
-          <a href={selected ? `/movies/${selected.id}` : null}>
+          <a
+            href={
+              type === "movie"
+                ? `/movies/${selected.id}`
+                : `/shows/${selected.id}`
+            }
+          >
             <img
               src={`https://image.tmdb.org/t/p/w500${selected.poster_path}`}
               alt=""
             />
           </a>
-          <h3>
+          {/* <h3>
             {selected.original_title} ({selected.release_date.substring(0, 4)})
-          </h3>
+          </h3> */}
         </div>
       </div>
     );

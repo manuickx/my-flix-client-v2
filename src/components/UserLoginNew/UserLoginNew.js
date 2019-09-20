@@ -16,9 +16,7 @@ class UserLoginNew extends Component {
       } else {
         localStorage.setItem("token", authData.jwt);
         this.props.history.push("/movies");
-        API.getCurrentUser(authData.jwt).then(
-          this.props.getCurrentUser(authData.jwt)
-        );
+        API.getCurrentUser(authData.jwt);
       }
     });
   };
@@ -64,7 +62,7 @@ class UserLoginNew extends Component {
             <input type="submit" className="fadeIn third" value="Log In" />
           </form>
           <div id="formFooter">
-            MyFlix
+            <Link to="/home">MyFlix</Link>
             {/* <a className="underlineHover" href="/">Forgot Password?</a> */}
           </div>
         </div>

@@ -1,5 +1,4 @@
 .info-details-container
-    // position: relative
     background-color: white
     width: 75%
     margin-left: 50%
@@ -18,8 +17,9 @@
     position: relative
 
 .info-backdrop-image
-    position: relative
     width: 100%
+
+//     position: relative
 
 .info-poster-container
     position: absolute
@@ -33,17 +33,24 @@
         border-radius: 0 50px 0 0
         box-shadow: 20px 10px 20px black
 
-.info-overview
-    // background-color: pink
-    display: grid
-    grid-template-rows: 25% 75%
+.collection-button
+    position: absolute
+    z-index: 10
+    right: 2%
+    bottom: 3%
 
-    p, h2
-        margin: 1% 2% 0 35%
-        min-height: 5em
+.info-movie-overview
+    font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)))
+    margin: 8% 2% 0 2%
+    text-align: justify
+    text-justify: inter-word
+
+.info-movie-title
+    font-size: calc(20px + (26 - 20) * ((100vw - 300px) / (1600 - 300)))
+    margin: 5% 0 0 35%
+    font-weight: bold
 
 .info-recommended-movies
-    // background-color: green
     display: grid
     grid-template-columns: 60% 40%
 
@@ -83,16 +90,14 @@
         transform: translateX(-50%)
 
 .trailer-container
-    // width: 60%
-    // margin-left: 50%
-    // transform: translateX(-50%)
     background-color: black
     padding: 1%
     margin: 1%
 
 .trailer-video
-    // width: 100%
-    width: 60%
+    // width: auto
+    // height: auto
+    // min-height: 100%
     margin-left: 50%
     transform: translateX(-50%)
 
@@ -105,3 +110,7 @@
     height: 100px
     width: 75px
     margin-right: 20px
+
+@media screen and (max-width: 961px)
+    .collection-button
+        size: "sm"

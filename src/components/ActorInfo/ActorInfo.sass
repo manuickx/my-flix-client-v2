@@ -1,5 +1,44 @@
-.actor-movies
-    list-style: none
+.actor-info-container
+    background-color: white
+    width: 75%
+    margin-left: 50%
+    transform: translateX(-50%)
+    display: grid
+    grid-template-rows: repeat(10, auto)
+    box-shadow: 0 0 50px 60px black
+    padding: 1%
 
-    li
-        margin: 5px
+.actor-images
+    display: grid
+    grid-template-columns: 40% 60%
+
+    .profile-image-container
+        width: 100%
+        padding: 2px
+
+        .profile-image
+            width: 100%
+            height: auto
+
+        .actor-images-container
+            margin: 1% 0
+            width: 100%
+            display: flex
+            flex-wrap: wrap
+
+            .small-image-container
+                margin: 0 1% 1% 0
+                width: 19%
+
+                img
+                    width: 100%
+                    height: auto
+                    min-height: 100%
+                    margin: auto
+
+    .actor-details
+        padding: 2px
+
+@media screen and (max-width: 768px)
+    .actor-info-container
+        width: 100%

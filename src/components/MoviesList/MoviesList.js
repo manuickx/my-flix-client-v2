@@ -1,58 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import "./MoviesList.sass";
 
+import API from "../../API";
 import MovieCard from "../MovieCard/MovieCard";
+import Loader from "../Loader/Loader";
 
-function MoviesList({ movies, shows, getMoreMovies, getMoreShows }) {
+function MoviesList({ type, location }) {
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(2);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    API.getItems(type, 1).then(items => setItems(items));
+  }, [type]);
+
+  const getItems = () => {
+    API.getItems(type, page)
+      .then(newItems => setItems([...items, ...newItems]))
+      .then(setPage(page + 1));
+  };
+
+  const getMoreItems = () => {
+    getItems(type, page);
+  };
+
   return (
     <div className="movies-container">
       <InfiniteScroll
-        dataLength={movies ? movies.length : shows.length}
-        next={movies ? getMoreMovies : getMoreShows}
-        hasMore={true}
-        loader={
-          <div
-            className="loader"
-            style={
-              movies
-                ? movies.length > 1
-                  ? { marginTop: "1%" }
-                  : null
-                : shows.length > 1
-                ? { marginTop: "1%" }
-                : null
-            }
-          >
-            <div className="lds-roller" key={0}>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        }
+        dataLength={items.length}
+        next={getMoreItems}
+        hasMore={location.pathname.includes("search") ? false : true}
+        loader={<Loader list={true} />}
       >
-        <ul className="movies-list">
-          {movies
-            ? movies.map(movie => (
-                <Link key={movie.id} to={`/movies/${movie.id}`}>
-                  <MovieCard movie={movie} />
-                </Link>
-              ))
-            : shows.map(show => (
-                <Link key={show.id} to={`/shows/${show.id}`}>
-                  <MovieCard movie={show} />
-                </Link>
-              ))}
-        </ul>
+        <div className="movies-list">
+          {items.map(item => (
+            <Link
+              key={item.id}
+              to={
+                type === "movie" || item.item_type === "movie"
+                  ? `/movies/${item.id}`
+                  : `/shows/${item.id}`
+              }
+            >
+              <MovieCard movie={item} />
+            </Link>
+          ))}
+        </div>
       </InfiniteScroll>
     </div>
   );

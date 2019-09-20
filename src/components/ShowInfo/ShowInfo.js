@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import API from "../../API";
 import InfoTop from "../MovieInfo/components/InfoTop";
 import InfoTrailer from "../MovieInfo/components/InfoTrailer";
+import PageNotFound from "../PageNotFound/PageNotFound";
 
 function ShowInfo(props) {
-  const { id } = props.match.params;
+  const { showId: id } = props.match.params;
 
+  const [loading, setLoading] = useState(true);
   const [showData, setShowData] = useState({
     show: null,
     show_trailer: null,
@@ -17,51 +19,52 @@ function ShowInfo(props) {
       const show = await API.getOneShow(id);
       const seasons = await Array.from(Array(show.number_of_seasons).keys());
       const show_trailers = await API.getShowTrailers(id);
-      const show_trailer = await show_trailers.find(
-        trail => trail.type === "Trailer"
-      );
+      const show_trailer = show_trailers
+        ? await show_trailers.find(
+            trail => trail.type === "Trailer" || trail.type === "Teaser"
+          )
+        : null;
       setShowData({ show, show_trailer, seasons });
+      setLoading(false);
     };
     fetchData();
   }, [id]);
 
   const { show, show_trailer, seasons } = showData;
 
-  if (show === null || show_trailer === null) {
-    return (
-      <div className="loader">
-        <div className="lds-roller" key={0}>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+  return (
+    <div>
+      {loading ? (
+        <div className="loader">
+          <div className="lds-roller" key={0}>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
-      </div>
-    );
-  } else {
-    const { name, overview, first_air_date, last_air_date } = show;
-    return (
-      <div className="info-details-container">
-        {seasons.map(season => (
-          <a href={`/shows/${id}/season/${season}`}>{season}</a>
-        ))}
-        <InfoTop movie={show} />
-        <div className="info-overview">
-          <h2>
-            {name} ({first_air_date.substr(0, 4)} -{" "}
-            {!show.in_production ? last_air_date.substr(0, 4) : null})
+      ) : show.error ? (
+        <PageNotFound />
+      ) : (
+        <div className="info-details-container">
+          {seasons.map(season => (
+            <a href={`/shows/${id}/season/${season + 1}`}>{season + 1}</a>
+          ))}
+          <InfoTop movie={show} />
+          <h2 className="info-movie-title">
+            {show.name} ({show.first_air_date.substr(0, 4)} -{" "}
+            {!show.in_production && show.last_air_date.substr(0, 4)})
           </h2>
-          <p>{overview}</p>
+          <p className="info-movie-overview">{show.overview}</p>
+          {show_trailer && <InfoTrailer trailer={show_trailer} />}
         </div>
-        <div>SEASONS {seasons}</div>
-        {show_trailer ? <InfoTrailer trailer={show_trailer} /> : null}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
 
 export default ShowInfo;

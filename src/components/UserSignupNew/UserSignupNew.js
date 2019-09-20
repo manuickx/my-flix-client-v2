@@ -14,10 +14,15 @@ class UserSignupNew extends Component {
 
   signupUser = () => {
     API.createUser(this.state).then(authData => {
-      localStorage.setItem("token", authData.jwt);
-      this.props.history.push("/movies");
-      API.getCurrentUser(authData.jwt);
-      this.props.getCurrentUser(authData.jwt);
+      if (authData.jwt === undefined) {
+        alert("There was an error");
+        this.props.history.push("/home");
+      } else {
+        localStorage.setItem("token", authData.jwt);
+        this.props.history.push("/movies");
+        API.getCurrentUser(authData.jwt);
+        // this.props.getCurrentUser(authData.jwt);
+      }
     });
   };
 
