@@ -35,7 +35,6 @@ function App(props) {
   const handleLogout = () => {
     localStorage.clear("token");
     setUser({ user: null });
-    props.history.push("/");
   };
 
   const handleSearch = async event => {

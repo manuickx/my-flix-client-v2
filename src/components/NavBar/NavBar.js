@@ -39,7 +39,7 @@ function NavBar({ user, handleLogout, setSearchTerm, handleSearch, props }) {
           <Nav>
             {user ? (
               <>
-                <Nav.Link href="/home" onClick={handleLogout}>
+                <Nav.Link href="/" onClick={handleLogout}>
                   LOGOUT
                 </Nav.Link>
                 <Nav.Link>{user.name.toUpperCase()}</Nav.Link>
