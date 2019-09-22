@@ -6,7 +6,11 @@ import Loader from "../Loader/Loader";
 
 function SearchList({ location }) {
   let type = location.pathname.includes("movies") ? "movie" : "tv";
-  let searchValid = location.search.substring(0, 6) === "?name=" ? true : false;
+  let searchValid =
+    location.search.substring(0, 6) === "?name=" &&
+    location.search.substring(6).length !== 0
+      ? true
+      : false;
   const searchTerm = location.search.substring(6);
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -28,12 +32,32 @@ function SearchList({ location }) {
       const movies5 = searchValid
         ? await API.searchMovie(searchTerm, type, 5)
         : [];
+      const movies6 = searchValid
+        ? await API.searchMovie(searchTerm, type, 6)
+        : [];
+      const movies7 = searchValid
+        ? await API.searchMovie(searchTerm, type, 7)
+        : [];
+      const movies8 = searchValid
+        ? await API.searchMovie(searchTerm, type, 8)
+        : [];
+      const movies9 = searchValid
+        ? await API.searchMovie(searchTerm, type, 9)
+        : [];
+      const movies10 = searchValid
+        ? await API.searchMovie(searchTerm, type, 10)
+        : [];
       setSearchResults([
         ...movies1,
         ...movies2,
         ...movies3,
         ...movies4,
-        ...movies5
+        ...movies5,
+        ...movies6,
+        ...movies7,
+        ...movies8,
+        ...movies9,
+        ...movies10
       ]);
       setLoading(false);
     };

@@ -21,8 +21,27 @@ function App(props) {
 
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState("Movies");
 
   let type = props.location.pathname.includes("movies") ? "movie" : "tv";
+  let sType;
+
+  switch (searchType) {
+    case "Movies":
+      sType = "movie";
+      break;
+    case "TV Shows":
+      sType = "tv";
+      break;
+    case "People":
+      sType = "person";
+      break;
+    case "All":
+      sType = "multi";
+      break;
+    default:
+      sType = "multi";
+  }
 
   useEffect(() => {
     const getUser = async () => {
@@ -37,12 +56,14 @@ function App(props) {
     setUser({ user: null });
   };
 
+  const handleSearchType = event => {
+    setSearchType(event.target.innerHTML);
+  };
+
   const handleSearch = async event => {
     event.preventDefault();
     props.history.push({
-      pathname: props.location.pathname.includes("movies")
-        ? "/search/movies"
-        : "/search/shows",
+      pathname: sType === "movie" ? "/search/movies" : "/search/shows",
       search: `?name=${searchTerm}`
     });
   };
@@ -56,6 +77,8 @@ function App(props) {
         setSearchTerm={setSearchTerm}
         handleSearch={handleSearch}
         searchTerm={searchTerm}
+        searchType={searchType}
+        handleSearchType={handleSearchType}
       />
       <div className="show-container">
         <Switch>
@@ -83,10 +106,27 @@ function App(props) {
           <Route
             path="/collection"
             exact
-            render={props => <CollectionList {...props} />}
+            render={props =>
+              user ? (
+                <CollectionList {...props} />
+              ) : (
+                <h2
+                  style={{
+                    position: "absolute",
+                    color: "white",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%)",
+                    fontSize: "2.5vw"
+                  }}
+                >
+                  YOU HAVE TO BE LOGGED IN TO HAVE ACCESS TO THIS PAGE
+                </h2>
+              )
+            }
           />
           <Route path="/movies/:movieId" exact component={MovieInfo} />
-          <Route path="/search/movies" exact component={SearchList} />} />
+          <Route path="/search/movies" exact component={SearchList} />} /> } />
           <Route path="/search/shows" exact component={SearchList} />} />
           <Route path="/shows/:showId" exact component={MovieInfo} />
           <Route

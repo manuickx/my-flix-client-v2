@@ -9,21 +9,26 @@ class UserSignupNew extends Component {
   state = {
     name: "",
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   };
 
   signupUser = () => {
-    API.createUser(this.state).then(authData => {
-      if (authData.jwt === undefined) {
-        alert("There was an error");
-        this.props.history.push("/home");
-      } else {
-        localStorage.setItem("token", authData.jwt);
-        this.props.history.push("/movies");
-        API.getCurrentUser(authData.jwt);
-        // this.props.getCurrentUser(authData.jwt);
-      }
-    });
+    if (this.state.password !== this.state.confirmPassword) {
+      alert("Passwords are not matching!");
+    } else {
+      API.createUser(this.state).then(authData => {
+        if (authData.jwt === undefined) {
+          alert("There was an error");
+          this.props.history.push("/home");
+        } else {
+          localStorage.setItem("token", authData.jwt);
+          this.props.history.push("/movies");
+          API.getCurrentUser(authData.jwt);
+          // this.props.getCurrentUser(authData.jwt);
+        }
+      });
+    }
   };
 
   handleChange = event => {
@@ -38,6 +43,7 @@ class UserSignupNew extends Component {
   };
 
   render() {
+    console.log(this.state.confirmPassword);
     return (
       <div className="wrapper fadeInDown">
         <div id="formContent">
@@ -76,10 +82,22 @@ class UserSignupNew extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
+            <input
+              type="password"
+              id="confirmPassword"
+              className="fadeIn fourth"
+              name="login"
+              placeholder="confirm password"
+              required
+              value={this.state.confirmPassword}
+              onChange={this.handleChange}
+            />
             <input type="submit" className="fadeIn fourth" value="Sign Up" />
           </form>
           <div id="formFooter">
-            MyFlix
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              myFlixDb
+            </Link>
             {/* <a className="underlineHover" href="/">Forgot Password?</a> */}
           </div>
         </div>

@@ -41,16 +41,26 @@
     bottom: 3%
     font-size: 2vw
 
-.info-movie-overview
-    font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)))
-    margin: 8% 2% 0 2%
-    text-align: justify
-    text-justify: inter-word
+.info-overview-container
+    position: relative
 
-.info-movie-title
-    font-size: calc(20px + (26 - 20) * ((100vw - 300px) / (1600 - 300)))
-    margin: 5% 0 0 35%
-    font-weight: bold
+    .info-movie-title
+        position: absolute
+        margin-left: 35%
+        max-height: 48px
+        width: 65%
+        font-size: calc(10px + 1vw)
+        font-weight: bold
+
+        p
+            margin: 0.5%
+
+    .info-movie-overview
+        padding: 0.5%
+        border-top: 1px solid grey
+        border-bottom: 1px solid grey
+        margin-top: 15%
+        font-size: calc(8px + 1vw)
 
 .info-recommended-movies
     display: grid
@@ -99,15 +109,15 @@
     width: 100%
 
 .movie-cast
-    li
-        list-style: none
-        margin-bottom: 10px
+    display: grid
 
 .actor-image
     height: 100px
     width: 75px
     margin-right: 20px
 
-@media screen and (max-width: 961px)
-    .collection-button
-        size: "sm"
+.actor-char-info
+    border-bottom: 1px solid grey
+    display: grid
+    grid-template-columns: 100px auto
+    align-items: center

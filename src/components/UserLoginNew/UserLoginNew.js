@@ -62,7 +62,9 @@ class UserLoginNew extends Component {
             <input type="submit" className="fadeIn third" value="Log In" />
           </form>
           <div id="formFooter">
-            <Link to="/home">MyFlix</Link>
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              myFlixDb
+            </Link>
             {/* <a className="underlineHover" href="/">Forgot Password?</a> */}
           </div>
         </div>

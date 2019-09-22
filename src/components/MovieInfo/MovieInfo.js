@@ -3,7 +3,7 @@ import API from "../../API";
 
 import "./MovieInfo.sass";
 
-import InfoRecommended from "./components/InfoRecommended";
+// import InfoRecommended from "./components/InfoRecommended";
 import InfoTop from "./components/InfoTop";
 import InfoTrailer from "./components/InfoTrailer";
 import InfoCast from "./components/InfoCast";
@@ -69,7 +69,12 @@ function MovieInfo({ match }) {
     fetchData();
   }, [type, id, token]);
 
-  const { item, cast, trailer, recommended, seasons } = itemData;
+  const {
+    item,
+    cast,
+    trailer
+    // ,recommended, seasons
+  } = itemData;
 
   return (
     <div>
@@ -109,8 +114,8 @@ function MovieInfo({ match }) {
               <InfoRecommended recommended={recommended} type={type} />
             </>
           )} */}
-          {/* <h2 className="section-title">CAST:</h2>
-          <InfoCast cast={cast} /> */}
+          <h2 className="section-title">CAST:</h2>
+          <InfoCast cast={cast} />
         </div>
       )}
     </div>

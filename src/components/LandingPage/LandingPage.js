@@ -8,10 +8,10 @@ function LandingPage() {
     <div>
       <div className="image-holder">
         <Image className="landing-image" src={image} alt="" fluid />
-        <div className="logo-big">MyFlix</div>
+        <div className="logo-big">myFlixDb</div>
         <div className="cross-line"></div>
         <div className="footer">
-          MyFlix 2019 © Manu Ticusan and Alex Bujenita
+          myFlixDb 2019 © Manu Ticusan and Alex Bujenita
         </div>
       </div>
     </div>

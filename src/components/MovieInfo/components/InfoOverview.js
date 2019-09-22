@@ -2,16 +2,20 @@ import React from "react";
 
 function InfoOverview({ item, type }) {
   return (
-    <div>
+    <div className="info-overview-container">
       {type === "movie" ? (
-        <h2 className="info-movie-title">
-          {item.title}({item.release_date.substring(0, 4)})
-        </h2>
+        <>
+          <div className="info-movie-title">
+            <p>{`${item.title}   (${item.release_date.substring(0, 4)})`}</p>
+          </div>
+        </>
       ) : (
-        <h2 className="info-movie-title">
-          {item.name}({item.first_air_date.substr(0, 4)} -{" "}
-          {!item.in_production && item.last_air_date.substr(0, 4)})
-        </h2>
+        <div className="info-movie-title">
+          <p>
+            {`${item.name}   (${item.first_air_date.substr(0, 4)} -
+            ${!item.in_production ? item.last_air_date.substr(0, 4) : ""})`}
+          </p>
+        </div>
       )}
       <p className="info-movie-overview">{item.overview}</p>
     </div>
