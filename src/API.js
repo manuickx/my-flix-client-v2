@@ -2,7 +2,7 @@ class API {
   static init() {
     // this.portIp = 3000;
     // this.baseUrl = "http://localhost:" + this.portIp;
-    this.baseUrl = "https://myflixtwo.herokuapp.com/";
+    this.baseUrl = "https://myflixxdb-api.herokuapp.com/";
   }
 
   static createUser = user => {
