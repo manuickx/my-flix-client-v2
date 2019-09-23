@@ -21,7 +21,9 @@ function NavBar({
   return (
     <div className="navbar">
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
-        <Navbar.Brand href="/">myFlixDb</Navbar.Brand>
+        <Navbar.Brand href="/" id="logo">
+          myFlixDb
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Form inline onSubmit={handleSearch} className="mr-auto ml-auto">
@@ -64,10 +66,10 @@ function NavBar({
             /> */}
           </Form>
           <Nav.Link href="/movies" id="nav-link">
-            MOVIES
+            <i className="fa fa-film"></i> MOVIES
           </Nav.Link>
           <Nav.Link href="/shows" id="nav-link">
-            TV SHOWS
+            <i className="fa fa-tv"></i> TV SHOWS
           </Nav.Link>
           {user ? (
             <DropdownButton
@@ -76,7 +78,7 @@ function NavBar({
               id="dropdown-menu-align-right"
               variant="link"
             >
-              {/* <NavDropdown.Item>PROFILE</NavDropdown.Item> */}
+              <NavDropdown.Item href="/profile">PROFILE</NavDropdown.Item>
               <NavDropdown.Item href="/collection">COLLECTION</NavDropdown.Item>
               <NavDropdown.Item href="/" onClick={handleLogout}>
                 LOG OUT
@@ -84,7 +86,7 @@ function NavBar({
             </DropdownButton>
           ) : (
             <Nav.Link href="/login" id="nav-link">
-              LOG IN
+              <i className="fa fa-user"></i> LOG IN
             </Nav.Link>
           )}
         </Navbar.Collapse>

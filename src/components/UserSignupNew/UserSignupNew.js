@@ -19,13 +19,12 @@ class UserSignupNew extends Component {
     } else {
       API.createUser(this.state).then(authData => {
         if (authData.jwt === undefined) {
-          alert("There was an error");
-          this.props.history.push("/home");
+          alert("There was an error, please try again!");
+          this.props.history.push("/");
         } else {
           localStorage.setItem("token", authData.jwt);
           this.props.history.push("/movies");
           API.getCurrentUser(authData.jwt);
-          // this.props.getCurrentUser(authData.jwt);
         }
       });
     }
@@ -43,7 +42,6 @@ class UserSignupNew extends Component {
   };
 
   render() {
-    console.log(this.state.confirmPassword);
     return (
       <div className="wrapper fadeInDown">
         <div id="formContent">
@@ -95,7 +93,7 @@ class UserSignupNew extends Component {
             <input type="submit" className="fadeIn fourth" value="Sign Up" />
           </form>
           <div id="formFooter">
-            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+            <Link style={{ textDecoration: "none", color: "black" }} to="/">
               myFlixDb
             </Link>
             {/* <a className="underlineHover" href="/">Forgot Password?</a> */}

@@ -12,7 +12,9 @@ function InfoOverview({ item, type }) {
       ) : (
         <div className="info-movie-title">
           <p>
-            {`${item.name}   (${item.first_air_date.substr(0, 4)} -
+            {`${item.name}   (${
+              item.first_air_date ? item.first_air_date.substr(0, 4) : ""
+            } -
             ${!item.in_production ? item.last_air_date.substr(0, 4) : ""})`}
           </p>
         </div>

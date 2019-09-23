@@ -15,6 +15,7 @@ import SearchList from "./components/SearchList/SearchList";
 import ActorInfo from "./components/ActorInfo/ActorInfo";
 import SeasonInfo from "./components/SeasonInfo/SeasonInfo";
 import PageNotFound from "./components/PageNotFound/PageNotFound";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 
 function App(props) {
   const token = localStorage.getItem("token");
@@ -57,10 +58,11 @@ function App(props) {
   };
 
   const handleSearchType = event => {
+    event.preventDefault();
     setSearchType(event.target.innerHTML);
   };
 
-  const handleSearch = async event => {
+  const handleSearch = event => {
     event.preventDefault();
     props.history.push({
       pathname: sType === "movie" ? "/search/movies" : "/search/shows",
@@ -102,6 +104,11 @@ function App(props) {
             path="/shows"
             exact
             render={props => <MoviesList {...props} type={type} />}
+          />
+          <Route
+            path="/profile"
+            exact
+            render={props => <ProfilePage {...props} user={user} />}
           />
           <Route
             path="/collection"
