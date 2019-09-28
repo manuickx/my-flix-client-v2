@@ -104,7 +104,7 @@ function MovieInfo({ match }) {
           )} */}
           {trailer && (
             <>
-              <h2 className="section-title">TRAILER:</h2>
+              <h4 className="section-title">TRAILER:</h4>
               <InfoTrailer trailer={trailer} />
             </>
           )}
@@ -114,7 +114,7 @@ function MovieInfo({ match }) {
               <InfoRecommended recommended={recommended} type={type} />
             </>
           )} */}
-          <h2 className="section-title">CAST:</h2>
+          <h4 className="section-title">CAST:</h4>
           <InfoCast cast={cast} />
         </div>
       )}

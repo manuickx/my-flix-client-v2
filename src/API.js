@@ -102,6 +102,14 @@ class API {
     }).then(resp => resp.json());
   };
 
+  static getActorShows = actorId => {
+    return fetch(this.baseUrl + "/actor_shows", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ actor_id: actorId })
+    }).then(resp => resp.json());
+  };
+
   static getActorImages = actorId => {
     return fetch(this.baseUrl + "/actor_images", {
       method: "POST",

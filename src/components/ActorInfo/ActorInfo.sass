@@ -8,37 +8,109 @@
     box-shadow: 0 0 50px 60px black
     padding: 1%
 
-.actor-images
+    .actor-images
+        width: 100%
+        height: auto
+        display: grid
+        grid-template-columns: 3.5fr 6.5fr
+
+        .actor-profile-image
+            width: 100%
+            padding: 2%
+
+            img
+                width: 100%
+                height: auto
+                box-shadow: 10px 10px 10px grey
+
+        .actor-profile-details
+            width: 100%
+            padding: 2%
+
+            .actor-name-container
+                background-color: #ffd700
+                margin-left: -2%
+                box-shadow: 10px 10px 10px grey
+
+                h1
+                    margin-left: 2%
+
+            h5
+                margin: 0
+
+        .external-links
+            margin: 2% 0
+
+            #external-link
+                margin-right: 2%
+
+.actor-images-container
+    width: 70vw
+    height: 20vh
+    border-top: 1px solid grey
+    border-bottom: 1px solid grey
+
+    // background-color: grey
+    overflow: scroll
+    margin: 1% auto
+    display: flex
+    padding: 0.5%
+
+    img
+        height: 100%
+        width: auto
+        margin: 0 1%
+        flex-direction: row
+
+.actor-movies
     display: grid
-    grid-template-columns: 40% 60%
 
-    .profile-image-container
-        width: 100%
-        padding: 2px
+.actor-movie-info
+    border-bottom: 1px solid grey
+    display: grid
+    grid-template-columns: 100px auto
+    align-items: center
 
-        .profile-image
-            width: 100%
-            height: auto
+.actor-movie-poster
+    height: 100px
+    width: 75px
+    margin-right: 20px
 
-        .actor-images-container
-            margin: 1% 0
-            width: 100%
-            display: flex
-            flex-wrap: wrap
+.actor-bio-container
+    margin-top: 3px
+    border-top: 1px solid black
+    width: 100%
+    min-height: 10vh
+    max-height: 20vh
+    overflow: scroll
 
-            .small-image-container
-                margin: 0 1% 1% 0
-                width: 19%
+.cast-select
+    background-color: grey
+    display: flex
+    position: relative
+    padding: 5px
+    margin-bottom: 1vh
 
-                img
-                    width: 100%
-                    height: auto
-                    min-height: 100%
-                    margin: auto
+    #type-select-button
+        position: absolute
+        right: 3px
+        top: 50%
+        transform: translateY(-50%)
 
-    .actor-details
-        padding: 2px
+    h4
+        margin: 0
+        color: white
 
-@media screen and (max-width: 768px)
-    .actor-info-container
-        width: 100%
+@media screen and (max-width: 425px)
+    .actor-profile-details
+        h1
+            font-size: 6vw
+
+        h5
+            font-size: 3vw
+            margin: 0
+
+    .actor-bio-container
+        p
+
+        font-size: 3vw

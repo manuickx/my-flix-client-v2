@@ -1,5 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
+import noImage from "../../../assets/no-featured-image.png";
+import noPoster from "../../../assets/no-poster.png";
 
 function InfoTop({
   movie,
@@ -37,7 +39,7 @@ function InfoTop({
         src={
           backdrop_path
             ? `https://image.tmdb.org/t/p/w500${backdrop_path}`
-            : "https://umbc.meyerandassoc.com/wp-content/themes/meyer_underscore_with_bootstrap_child/src/assets/images/no-featured-image.png"
+            : `${noImage}`
         }
         alt=""
       />
@@ -49,7 +51,7 @@ function InfoTop({
             src={
               poster_path
                 ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                : "https://d32qys9a6wm9no.cloudfront.net/images/movies/poster/500x735.png"
+                : `${noPoster}`
             }
             alt=""
           />

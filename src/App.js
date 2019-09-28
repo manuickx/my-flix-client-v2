@@ -113,24 +113,7 @@ function App(props) {
           <Route
             path="/collection"
             exact
-            render={props =>
-              user ? (
-                <CollectionList {...props} />
-              ) : (
-                <h2
-                  style={{
-                    position: "absolute",
-                    color: "white",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%)",
-                    fontSize: "2.5vw"
-                  }}
-                >
-                  YOU HAVE TO BE LOGGED IN TO HAVE ACCESS TO THIS PAGE
-                </h2>
-              )
-            }
+            render={props => <CollectionList {...props} />}
           />
           <Route path="/movies/:movieId" exact component={MovieInfo} />
           <Route path="/search/movies" exact component={SearchList} />} /> } />
