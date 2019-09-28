@@ -17,6 +17,10 @@ The app is live at https://myflixxdb.herokuapp.com/
 
 * [Boootstrap](https://react-bootstrap.github.io/), [Font Awesome](https://fontawesome.com/) and [SASS](https://sass-lang.com/) for styling.
 
+* Other react components:
+  - [react-youtube](https://www.npmjs.com/package/react-youtube)
+  - [react-infinite-scroll-component](https://www.npmjs.com/package/react-infinite-scroll-component)
+
 ## Installation instructions
 
 ### Fork and clone this repository.
