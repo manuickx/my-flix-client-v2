@@ -1,7 +1,10 @@
 class API {
   static init() {
+    // use this lines if you want to use a local server:
     // this.portIp = 3000;
     // this.baseUrl = "http://localhost:" + this.portIp;
+
+    // use this line if you want to use the online server
     this.baseUrl = "https://myflixxdb-api.herokuapp.com/";
   }
 

@@ -9,6 +9,7 @@ class UserSignupNew extends Component {
   state = {
     name: "",
     email: "",
+    age: "",
     password: "",
     confirmPassword: ""
   };
@@ -68,6 +69,17 @@ class UserSignupNew extends Component {
               placeholder="email"
               required
               value={this.state.email}
+              onChange={this.handleChange}
+            />
+            <input
+              type="number"
+              min="1"
+              id="age"
+              className="fadeIn third"
+              name="age"
+              placeholder="age"
+              // required
+              value={this.state.age}
               onChange={this.handleChange}
             />
             <input

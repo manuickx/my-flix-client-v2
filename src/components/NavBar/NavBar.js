@@ -60,13 +60,15 @@ function NavBar({
             >
               <i className="fa fa-search"></i>
             </Button>
-            <Form.Check
-              style={{ color: "white" }}
-              type="checkbox"
-              label="Include Adult?"
-              className="ml-2"
-              onClick={() => handleAdult()}
-            />
+            {user && user.age > 17 && (
+              <Form.Check
+                style={{ color: "white" }}
+                type="checkbox"
+                label="Include Adult?"
+                className="ml-2"
+                onClick={() => handleAdult()}
+              />
+            )}
           </Form>
           <Nav.Link href="/movies" id="nav-link">
             <i className="fa fa-film"></i> MOVIES
