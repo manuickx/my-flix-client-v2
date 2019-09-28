@@ -46,6 +46,8 @@ function InfoTop({
       <div className="info-poster-container">
         <a
           href={poster_path && `https://image.tmdb.org/t/p/w500${poster_path}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <img
             src={

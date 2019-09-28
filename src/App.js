@@ -23,6 +23,7 @@ function App(props) {
   const [user, setUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchType, setSearchType] = useState("Movies");
+  const [adult, setAdult] = useState(false);
 
   let type = props.location.pathname.includes("movies") ? "movie" : "tv";
   let sType;
@@ -66,8 +67,12 @@ function App(props) {
     event.preventDefault();
     props.history.push({
       pathname: sType === "movie" ? "/search/movies" : "/search/shows",
-      search: `?name=${searchTerm}`
+      search: `?name=${searchTerm}&adult=${adult}`
     });
+  };
+
+  const handleAdult = () => {
+    setAdult(!adult);
   };
 
   return (
@@ -81,6 +86,8 @@ function App(props) {
         searchTerm={searchTerm}
         searchType={searchType}
         handleSearchType={handleSearchType}
+        adult={adult}
+        handleAdult={handleAdult}
       />
       <div className="show-container">
         <Switch>
@@ -116,8 +123,8 @@ function App(props) {
             render={props => <CollectionList {...props} />}
           />
           <Route path="/movies/:movieId" exact component={MovieInfo} />
-          <Route path="/search/movies" exact component={SearchList} />} /> } />
-          <Route path="/search/shows" exact component={SearchList} />} />
+          <Route path="/search/movies" exact component={SearchList} />
+          <Route path="/search/shows" exact component={SearchList} />
           <Route path="/shows/:showId" exact component={MovieInfo} />
           <Route
             path="/shows/:showId/season/:seasonId"

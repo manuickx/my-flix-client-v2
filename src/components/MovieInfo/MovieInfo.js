@@ -11,7 +11,7 @@ import PageNotFound from "../PageNotFound/PageNotFound";
 import InfoOverview from "./components/InfoOverview";
 import Loader from "../Loader/Loader";
 
-function MovieInfo({ match }) {
+function MovieInfo({ match, history }) {
   const id = match.params.movieId ? match.params.movieId : match.params.showId;
   const token = localStorage.getItem("token");
   const type = match.params.movieId ? "movie" : "tv";
@@ -46,8 +46,11 @@ function MovieInfo({ match }) {
         (await Array.from(Array(item.number_of_seasons).keys()));
       const cast = await API.getCredits(type, id);
       const trailers = await API.getTrailers(type, id);
+      console.log(trailers.message);
       const trailer =
-        trailers && (await trailers.find(trail => trail.type === "Trailer"));
+        !trailers.message &&
+        trailers &&
+        (await trailers.find(trail => trail.type === "Trailer"));
       const recommended = await API.getRecommendations(type, id);
       const userMovies = token && (await API.getUserMovies(token));
       const inCollection =
@@ -80,8 +83,8 @@ function MovieInfo({ match }) {
     <div>
       {loading ? (
         <Loader />
-      ) : item.error ? (
-        <PageNotFound />
+      ) : item.message ? (
+        <PageNotFound history={history} />
       ) : (
         <div className="info-details-container">
           <InfoTop

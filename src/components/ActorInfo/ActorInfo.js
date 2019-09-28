@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 function ActorInfo(props) {
   const { id } = props.match.params;
 
-  const [type, setType] = useState(true);
+  const [isMovie, setIsMovie] = useState(true);
   const [loading, setLoading] = useState(true);
   const [actorDetails, setActorDetails] = useState({
     actor: null,
@@ -44,16 +44,16 @@ function ActorInfo(props) {
             profileImage={actor.profile_path}
           />
           <div className="cast-select">
-            <h4>{type ? "MOVIES:" : "TV SHOWS:"}</h4>
+            <h4>{isMovie ? "MOVIES:" : "TV SHOWS:"}</h4>
             <Button
-              onClick={() => setType(!type)}
+              onClick={() => setIsMovie(!isMovie)}
               size="sm"
               id="type-select-button"
             >
-              {type ? "TV SHOWS" : "MOVIES"}
+              {isMovie ? "TV SHOWS" : "MOVIES"}
             </Button>
           </div>
-          <ActorMovies movies={type ? movies : shows} type={type} />
+          <ActorMovies movies={movies} shows={shows} isMovie={isMovie} />
         </div>
       )}
     </div>

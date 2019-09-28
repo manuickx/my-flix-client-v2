@@ -92,6 +92,7 @@ function ActorImages({ actor, images, profileImage }) {
         <div className="actor-images-container">
           {images.profiles.map(image => (
             <img
+              key={image.file_path}
               onClick={() => handleSelection(image)}
               src={`https://image.tmdb.org/t/p/w500${image.file_path}`}
               alt=""

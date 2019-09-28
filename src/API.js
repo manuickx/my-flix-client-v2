@@ -64,14 +64,15 @@ class API {
     }).then(resp => resp.json());
   };
 
-  static searchMovie = (searchTerm, searchType, page) => {
+  static searchMovie = (searchTerm, searchType, page, adult) => {
     return fetch(this.baseUrl + "/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         page: page,
         search_term: searchTerm,
-        search_type: searchType
+        search_type: searchType,
+        adult: adult
       })
     })
       .then(resp => resp.json())
@@ -133,7 +134,9 @@ class API {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ item_id: itemId, type: type })
-    }).then(resp => resp.json());
+    })
+      .then(resp => resp.json())
+      .catch(error => error);
   };
 
   static getTrailers = (type, itemId) => {
@@ -143,7 +146,8 @@ class API {
       body: JSON.stringify({ type: type, item_id: itemId })
     })
       .then(resp => resp.json())
-      .then(json => json.results);
+      .then(json => json.results)
+      .catch(error => error);
   };
 
   static getCredits = (type, itemId) => {
@@ -153,7 +157,8 @@ class API {
       body: JSON.stringify({ type: type, item_id: itemId })
     })
       .then(resp => resp.json())
-      .then(json => json.cast);
+      .then(json => json.cast)
+      .catch(error => error);
   };
 
   static getRecommendations = (type, itemId) => {
@@ -163,7 +168,8 @@ class API {
       body: JSON.stringify({ type: type, item_id: itemId })
     })
       .then(resp => resp.json())
-      .then(json => json.results);
+      .then(json => json.results)
+      .catch(error => error);
   };
 }
 
