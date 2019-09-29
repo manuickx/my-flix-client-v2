@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import MovieCard from "../MovieCard/MovieCard";
+
 import API from "../../API";
+import MovieCard from "../MovieCard/MovieCard";
 import Loader from "../Loader/Loader";
 import NoSearchResults from "../NoSearchResults/NoSearchResults";
 
-function SearchList({ location, history }) {
-  console.log(location.search);
+function SearchList({ location, history, user }) {
   let type = location.pathname.includes("movies") ? "movie" : "tv";
   let searchValid =
     location.search.substring(0, 6) === "?name=" &&
@@ -14,7 +14,8 @@ function SearchList({ location, history }) {
       ? true
       : false;
   const searchTerm = location.search.split("&adult")[0].split("?name=")[1];
-  const adult = location.search.split("&adult=")[1];
+  const adult =
+    user && user.age > 17 ? location.search.split("&adult=")[1] : false;
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,48 +23,14 @@ function SearchList({ location, history }) {
     const handleSearch = async () => {
       setSearchResults([]);
       setLoading(true);
-      const movies1 = searchValid
-        ? await API.searchMovie(searchTerm, type, 1, adult)
-        : [];
-      const movies2 = searchValid
-        ? await API.searchMovie(searchTerm, type, 2, adult)
-        : [];
-      const movies3 = searchValid
-        ? await API.searchMovie(searchTerm, type, 3, adult)
-        : [];
-      const movies4 = searchValid
-        ? await API.searchMovie(searchTerm, type, 4, adult)
-        : [];
-      const movies5 = searchValid
-        ? await API.searchMovie(searchTerm, type, 5, adult)
-        : [];
-      const movies6 = searchValid
-        ? await API.searchMovie(searchTerm, type, 6, adult)
-        : [];
-      const movies7 = searchValid
-        ? await API.searchMovie(searchTerm, type, 7, adult)
-        : [];
-      const movies8 = searchValid
-        ? await API.searchMovie(searchTerm, type, 8, adult)
-        : [];
-      const movies9 = searchValid
-        ? await API.searchMovie(searchTerm, type, 9, adult)
-        : [];
-      const movies10 = searchValid
-        ? await API.searchMovie(searchTerm, type, 10, adult)
-        : [];
-      setSearchResults([
-        ...movies1,
-        ...movies2,
-        ...movies3,
-        ...movies4,
-        ...movies5,
-        ...movies6,
-        ...movies7,
-        ...movies8,
-        ...movies9,
-        ...movies10
-      ]);
+      let movies = [];
+      if (searchValid) {
+        for (let page = 1; page < 11; page++) {
+          let moreMovies = await API.searchMovie(searchTerm, type, page, adult);
+          movies = [...movies, ...moreMovies];
+        }
+      }
+      setSearchResults(movies);
       setLoading(false);
     };
     handleSearch();

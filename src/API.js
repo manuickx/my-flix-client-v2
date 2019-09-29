@@ -8,6 +8,8 @@ class API {
     this.baseUrl = "https://myflixxdb-api.herokuapp.com/";
   }
 
+  // USER FUNCTIONS * CREATE * LOGIN * GET USER * GET USER COLLECTION
+
   static createUser = user => {
     return fetch(this.baseUrl + "/users/create", {
       method: "POST",
@@ -44,6 +46,8 @@ class API {
     }).then(resp => resp.json());
   }
 
+  // COLLECTION FUNCTIONS * ADD TO COLLECTION * REMOVE FROM COLLECTION - (WORK FOR MOVIES AND TV SHOWS)
+
   static addMovieToCollection = (movie, token) => {
     return fetch(this.baseUrl + "/user_favourites", {
       method: "POST",
@@ -67,6 +71,8 @@ class API {
     }).then(resp => resp.json());
   };
 
+  // SEARCH FUNCTION - (WORK FOR MOVIES AND TV SHOWS)
+
   static searchMovie = (searchTerm, searchType, page, adult) => {
     return fetch(this.baseUrl + "/search", {
       method: "POST",
@@ -82,6 +88,8 @@ class API {
       .then(json => json.results);
   };
 
+  // GET SHOW SEASONS FUNCTION
+
   static getShowSeason = (showId, season) => {
     return fetch(this.baseUrl + "/show_season", {
       method: "POST",
@@ -89,6 +97,8 @@ class API {
       body: JSON.stringify({ show_id: showId, season: season })
     }).then(resp => resp.json());
   };
+
+  // ACTOR FUNCTIONS * DETAILS * MOVIES * TV SHOWS * IMAGES
 
   static getActorDetails = actorId => {
     return fetch(this.baseUrl + "/actors/1", {
@@ -121,6 +131,8 @@ class API {
       body: JSON.stringify({ actor_id: actorId })
     }).then(resp => resp.json());
   };
+
+  // ITEMS (MOVIES AND TV SHOWS) FUNCTIONS * GET ITEMS * GET ONE ITEM * GET TRAILERS * GET CAST * GET RECOMMENDATIONS
 
   static getItems(type, page) {
     return fetch(this.baseUrl + "/items", {

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+
 import noImage from "../../../assets/Blank-Silhouette.jpg";
 
-function ActorImages({ actor, images, profileImage }) {
+function ActorDetails({ actor, images, profileImage }) {
   const [selectedImage, setSelectedImage] = useState(profileImage);
 
   const handleSelection = image => {
@@ -104,4 +105,4 @@ function ActorImages({ actor, images, profileImage }) {
   );
 }
 
-export default ActorImages;
+export default ActorDetails;

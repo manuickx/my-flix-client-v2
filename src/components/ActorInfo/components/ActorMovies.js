@@ -1,19 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import noPoster from "../../../assets/no-poster.png";
 
-function ActorMovies({ movies, shows, isMovie }) {
-  const sortedMovies = movies.cast
+function ActorMovies({ movies, shows, isMovie, user }) {
+  const noAdultMovies = movies.cast.filter(movie => movie.adult === false);
+  const sortedMovies = (user && user.age > 17 ? movies.cast : noAdultMovies)
     .filter(movie => isNaN(movie.release_date))
     .sort((a, b) => Date.parse(b.release_date) - Date.parse(a.release_date));
 
-  const uniqueShows = [...new Set(shows.cast)];
-  const sortedShows = uniqueShows
+  const sortedShows = shows.cast
     .filter(show => isNaN(show.first_air_date))
     .sort(
       (a, b) => Date.parse(b.first_air_date) - Date.parse(a.first_air_date)
     );
-
   return (
     <div className="actor-movies">
       {isMovie

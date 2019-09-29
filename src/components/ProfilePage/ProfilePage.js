@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import API from "../../API";
+
 import "./ProfilePage.sass";
+
+import picture from "../../assets/profile_picture1.jpg";
+import background from "../../assets/profile_background1.jpg";
+
+import API from "../../API";
 import MustBeLoggedIn from "../MustBeLoggedIn/MustBeLoggedIn";
 
 function ProfilePage({ user, history }) {
@@ -27,17 +32,10 @@ function ProfilePage({ user, history }) {
     <div>
       {token ? (
         <div className="profile-container">
-          <img
-            id="profile-background-image"
-            src="https://cdn1us.denofgeek.com/sites/denofgeekus/files/styles/main_wide/public/mcu-1-iron-man.jpg?itok=3BqCURHK"
-            alt=""
-          />
+          <img id="profile-background-image" src={background} alt="" />
           <div className="profile-card-container">
             <div className="profile-image-container">
-              <img
-                src="https://img1.looper.com/img/gallery/audi-may-have-spoiled-who-saves-tony-stark-in-avengers-4/intro-1547480934.jpg"
-                alt=""
-              />
+              <img src={picture} alt="" />
             </div>
             <a href="/collection" id="collection-button">
               Collection

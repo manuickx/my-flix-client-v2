@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import "./ActorInfo.sass";
-import API from "../../API";
-import Loader from "../Loader/Loader";
-import ActorImages from "./components/ActorImages";
-import ActorMovies from "./components/ActorMovies";
 import Button from "react-bootstrap/Button";
 
-function ActorInfo(props) {
-  const { id } = props.match.params;
+import "./ActorInfo.sass";
+
+import API from "../../API";
+import Loader from "../Loader/Loader";
+import ActorDetails from "./components/ActorDetails";
+import ActorMovies from "./components/ActorMovies";
+
+function ActorInfo({ user, match }) {
+  const { id } = match.params;
 
   const [isMovie, setIsMovie] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -38,7 +40,7 @@ function ActorInfo(props) {
         <Loader />
       ) : (
         <div className="actor-info-container">
-          <ActorImages
+          <ActorDetails
             actor={actor}
             images={images}
             profileImage={actor.profile_path}
@@ -53,7 +55,12 @@ function ActorInfo(props) {
               {isMovie ? "TV SHOWS" : "MOVIES"}
             </Button>
           </div>
-          <ActorMovies movies={movies} shows={shows} isMovie={isMovie} />
+          <ActorMovies
+            movies={movies}
+            shows={shows}
+            isMovie={isMovie}
+            user={user}
+          />
         </div>
       )}
     </div>

@@ -26,24 +26,6 @@ function App(props) {
   const [adult, setAdult] = useState(false);
 
   let type = props.location.pathname.includes("movies") ? "movie" : "tv";
-  let sType;
-
-  switch (searchType) {
-    case "Movies":
-      sType = "movie";
-      break;
-    case "TV Shows":
-      sType = "tv";
-      break;
-    case "People":
-      sType = "person";
-      break;
-    case "All":
-      sType = "multi";
-      break;
-    default:
-      sType = "multi";
-  }
 
   useEffect(() => {
     const getUser = async () => {
@@ -66,7 +48,7 @@ function App(props) {
   const handleSearch = event => {
     event.preventDefault();
     props.history.push({
-      pathname: sType === "movie" ? "/search/movies" : "/search/shows",
+      pathname: searchType === "Movies" ? "/search/movies" : "/search/shows",
       search: `?name=${searchTerm}&adult=${adult}`
     });
   };
@@ -122,16 +104,32 @@ function App(props) {
             exact
             render={props => <CollectionList {...props} />}
           />
-          <Route path="/movies/:movieId" exact component={MovieInfo} />
-          <Route path="/search/movies" exact component={SearchList} />
-          <Route path="/search/shows" exact component={SearchList} />
+          <Route
+            path="/movies/:movieId"
+            exact
+            render={props => <MovieInfo {...props} user={user} />}
+          />
+          <Route
+            path="/search/movies"
+            exact
+            render={props => <SearchList {...props} user={user} />}
+          />
+          <Route
+            path="/search/shows"
+            exact
+            render={props => <SearchList {...props} user={user} />}
+          />
           <Route path="/shows/:showId" exact component={MovieInfo} />
           <Route
             path="/shows/:showId/season/:seasonId"
             exact
             component={SeasonInfo}
           />
-          <Route path="/actors/:id" component={ActorInfo} />
+          <Route
+            path="/actors/:id"
+            exact
+            render={props => <ActorInfo {...props} user={user} />}
+          />
           <Route path="*" component={PageNotFound} />
         </Switch>
       </div>

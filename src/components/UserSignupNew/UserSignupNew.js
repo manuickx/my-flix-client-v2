@@ -108,7 +108,6 @@ class UserSignupNew extends Component {
             <Link style={{ textDecoration: "none", color: "black" }} to="/">
               myFlixDb
             </Link>
-            {/* <a className="underlineHover" href="/">Forgot Password?</a> */}
           </div>
         </div>
       </div>

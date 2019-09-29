@@ -14,12 +14,10 @@ function NavBar({
   user,
   handleLogout,
   setSearchTerm,
-  adult,
   handleAdult,
   handleSearch,
   searchType,
-  handleSearchType,
-  props
+  handleSearchType
 }) {
   const token = localStorage.getItem("token");
   return (

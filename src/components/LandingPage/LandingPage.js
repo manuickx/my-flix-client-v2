@@ -1,13 +1,14 @@
 import React from "react";
-import image from "../../assets/wp1945897-movie-posters-wallpapers.jpg";
+
 import "./LandingPage.sass";
-import Image from "react-bootstrap/Image";
+
+import image from "../../assets/wp1945897-movie-posters-wallpapers.jpg";
 
 function LandingPage() {
   return (
     <div>
       <div className="image-holder">
-        <Image className="landing-image" src={image} alt="" fluid />
+        <img className="landing-image" src={image} alt="" />
         <div className="logo-big">myFlixDb</div>
         <div className="cross-line"></div>
         <div className="footer">

@@ -10,8 +10,9 @@ import InfoCast from "./components/InfoCast";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import InfoOverview from "./components/InfoOverview";
 import Loader from "../Loader/Loader";
+import MustBeLoggedIn from "../MustBeLoggedIn/MustBeLoggedIn";
 
-function MovieInfo({ match, history }) {
+function MovieInfo({ user, match, history }) {
   const id = match.params.movieId ? match.params.movieId : match.params.showId;
   const token = localStorage.getItem("token");
   const type = match.params.movieId ? "movie" : "tv";
@@ -46,7 +47,6 @@ function MovieInfo({ match, history }) {
         (await Array.from(Array(item.number_of_seasons).keys()));
       const cast = await API.getCredits(type, id);
       const trailers = await API.getTrailers(type, id);
-      console.log(trailers.message);
       const trailer =
         !trailers.message &&
         trailers &&
@@ -72,12 +72,7 @@ function MovieInfo({ match, history }) {
     fetchData();
   }, [type, id, token]);
 
-  const {
-    item,
-    cast,
-    trailer
-    // ,recommended, seasons
-  } = itemData;
+  const { item, cast, trailer } = itemData;
 
   return (
     <div>
@@ -85,7 +80,7 @@ function MovieInfo({ match, history }) {
         <Loader />
       ) : item.message ? (
         <PageNotFound history={history} />
-      ) : (
+      ) : !item.adult || (item.adult && user && user.age > 17) ? (
         <div className="info-details-container">
           <InfoTop
             movie={item}
@@ -120,6 +115,8 @@ function MovieInfo({ match, history }) {
           <h4 className="section-title">CAST:</h4>
           <InfoCast cast={cast} />
         </div>
+      ) : (
+        <MustBeLoggedIn history={history} />
       )}
     </div>
   );

@@ -22,17 +22,18 @@ function CollectionList({ history }) {
     <div>
       {token ? (
         <div className="movies-list">
-          {favs.map(fav =>
-            fav.item_type === "movie" ? (
-              <Link key={fav.movie_ref_id} to={`/movies/${fav.movie_ref_id}`}>
-                <MovieCard movie={fav} />
-              </Link>
-            ) : (
-              <Link key={fav.movie_ref_id} to={`/shows/${fav.movie_ref_id}`}>
-                <MovieCard movie={fav} />
-              </Link>
-            )
-          )}
+          {favs.map(fav => (
+            <Link
+              key={fav.movie_ref_id}
+              to={
+                fav.item_type === "movie"
+                  ? `/movies/${fav.movie_ref_id}`
+                  : `/shows/${fav.movie_ref_id}`
+              }
+            >
+              <MovieCard movie={fav} />
+            </Link>
+          ))}
         </div>
       ) : (
         <MustBeLoggedIn history={history} />
