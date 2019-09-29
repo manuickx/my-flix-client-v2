@@ -18,14 +18,16 @@ class UserSignupNew extends Component {
     if (this.state.password !== this.state.confirmPassword) {
       alert("Passwords are not matching!");
     } else {
-      API.createUser(this.state).then(authData => {
-        if (authData.jwt === undefined) {
-          alert("There was an error, please try again!");
+      API.createUser(this.state).then(resp => {
+        if (resp.jwt === undefined) {
+          alert(
+            `${Object.keys(resp.error)[0]} ${Object.values(resp.error)[0]}`
+          );
           this.props.history.push("/");
         } else {
-          localStorage.setItem("token", authData.jwt);
+          localStorage.setItem("token", resp.jwt);
           this.props.history.push("/movies");
-          API.getCurrentUser(authData.jwt);
+          API.getCurrentUser(resp.jwt);
         }
       });
     }
