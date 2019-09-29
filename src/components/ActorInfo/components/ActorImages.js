@@ -88,7 +88,7 @@ function ActorImages({ actor, images, profileImage }) {
           </div>
         </div>
       </div>
-      {images.profiles.length !== 0 && (
+      {images.profiles.length > 1 && (
         <div className="actor-images-container">
           {images.profiles.map(image => (
             <img

@@ -46,10 +46,12 @@ function ProfilePage({ user, history }) {
               Edit profile
             </a>
             <div className="profile-details-container">
-              <h1 className="info-title">Name:</h1>{" "}
-              <h1 className="info-value">{user && user.name.toUpperCase()}</h1>{" "}
+              <h1 className="info-title">Name:</h1>
+              <h1 className="info-value">{user && user.name.toUpperCase()}</h1>
               <h1 className="info-title">Email: </h1>
               <h1 className="info-value">{user && user.email}</h1>
+              <h1 className="info-title">Age: </h1>
+              <h1 className="info-value">{user && user.age}</h1>
               <h1 className="info-title">Movies:</h1>
               <h1 className="info-value">{movies.length}</h1>
               <h1 className="info-title">Tv Shows:</h1>

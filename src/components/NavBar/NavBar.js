@@ -23,7 +23,7 @@ function NavBar({
 }) {
   const token = localStorage.getItem("token");
   return (
-    <div className="navbar">
+    <div className="navbar-container">
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" fixed="top">
         <Navbar.Brand href="/" id="logo">
           myFlixDb
