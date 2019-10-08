@@ -15,8 +15,14 @@ function InfoOverview({ item, type }) {
   const date =
     type === "movie"
       ? release_date && release_date.substring(0, 4)
-      : `${first_air_date && first_air_date.substr(0, 4)} - ${
-          !in_production ? last_air_date.substr(0, 4) : ""
+      : `${
+          first_air_date && first_air_date !== null
+            ? first_air_date.substr(0, 4)
+            : ""
+        } - ${
+          !in_production && last_air_date !== null
+            ? last_air_date.substr(0, 4)
+            : ""
         }`;
 
   return (

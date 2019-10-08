@@ -1,11 +1,11 @@
 class API {
   static init() {
     // use this lines if you want to use a local server:
-    // this.portIp = 3000;
-    // this.baseUrl = "http://localhost:" + this.portIp;
+    this.portIp = 3000;
+    this.baseUrl = "http://localhost:" + this.portIp;
 
     // use this line if you want to use the online server
-    this.baseUrl = "https://myflixxdb-api.herokuapp.com/";
+    // this.baseUrl = "https://myflixxdb-api.herokuapp.com/";
   }
 
   // USER FUNCTIONS * CREATE * LOGIN * GET USER * GET USER COLLECTION
@@ -18,15 +18,15 @@ class API {
     }).then(resp => resp.json());
   };
 
-  static login(credentials) {
+  static login = credentials => {
     return fetch(this.baseUrl + "/auth/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials)
     }).then(resp => resp.json());
-  }
+  };
 
-  static getCurrentUser(token) {
+  static getCurrentUser = token => {
     return fetch(this.baseUrl + "/auth/show", {
       method: "GET",
       headers: {
@@ -34,9 +34,9 @@ class API {
         Authorization: token
       }
     }).then(resp => resp.json());
-  }
+  };
 
-  static getUserMovies(token) {
+  static getUserMovies = token => {
     return fetch(this.baseUrl + "/user_favourites", {
       method: "GET",
       headers: {
@@ -44,7 +44,7 @@ class API {
         Authorization: token
       }
     }).then(resp => resp.json());
-  }
+  };
 
   // COLLECTION FUNCTIONS * ADD TO COLLECTION * REMOVE FROM COLLECTION - (WORK FOR MOVIES AND TV SHOWS)
 
@@ -134,7 +134,7 @@ class API {
 
   // ITEMS (MOVIES AND TV SHOWS) FUNCTIONS * GET ITEMS * GET ONE ITEM * GET TRAILERS * GET CAST * GET RECOMMENDATIONS
 
-  static getItems(type, page) {
+  static getItems = (type, page) => {
     return fetch(this.baseUrl + "/items", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -142,7 +142,7 @@ class API {
     })
       .then(resp => resp.json())
       .then(json => json.results);
-  }
+  };
 
   static getOneItem = (type, itemId) => {
     return fetch(this.baseUrl + "/items/1", {
